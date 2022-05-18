@@ -12,7 +12,7 @@ class StatsRepository
             return $collection->aggregate([
                     [
                         '$group' => [
-                            '_id' => '$hash_request',
+                            '_id' => '$request',
                             'count' => ['$sum' => 1]
                         ]
                     ],

@@ -31,11 +31,11 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ~/docker-compose/mongo:/data/db
+      - ./docker-compose/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
-      - MONGO_INITDB_DATABASE=${DB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=fizzbuzz
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - MONGO_INITDB_DATABASE=fizzbuzz
     networks:
       - lbc-fizzbuzz
 

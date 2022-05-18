@@ -11,6 +11,7 @@ Install and use [docker](https://docs.docker.com/get-docker/)
 ### Install & build
 ```bash
 make start
+make create-db
 ```
 
 ### Launch tests
@@ -32,10 +33,10 @@ Launch web interface http://localhost:8000/api/documentation
 
 ## Direct usage
 Generate a fizzbuzz string for 3 (with string Michael), 5 (with string Scott) (and both), with limit 100 : 
-###[Generate MichaelScott](http://localhost:8000/generate_fizzbuzz?int1=3&int2=5&limit=100&str1=Michael&str2=Scott)
+### [Generate MichaelScott](http://localhost:8000/generate_fizzbuzz?int1=3&int2=5&limit=100&str1=Michael&str2=Scott)
 
 Get the most used request for the fizzbuzz generation call:
-###[Most call request](http://localhost:8000/get_most_called_request)
+### [Most call request](http://localhost:8000/get_most_called_request)
 
 ## Important files and directories
 **Application** files are present in **app** directory.
@@ -45,3 +46,10 @@ Get the most used request for the fizzbuzz generation call:
 **Routes/web.php** contains all (2) routes.
 
 **Tests** contains all test for the application.
+
+### Reading order (suggested) : 
+- Main controller : app/Http/Controllers/FizzBuzzController.php
+- FizzBuzzItem : app/ValueObject/FizzBuzzItem.php
+- Database Model for Stats : app/Models/Stats.php
+- Action to generate the fizzbuzz string : app/Actions/FizzBuzzAction.php
+- Repository to get stats data from db : app/Repositories/StatsRepository.php

@@ -19,7 +19,7 @@ class Stats extends Eloquent
      * @var array
      */
     protected $fillable = [
-        'hash_request'
+        'request'
     ];
 
     /**

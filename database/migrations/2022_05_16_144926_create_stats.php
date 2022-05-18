@@ -15,7 +15,7 @@ class CreateStats extends Migration
     {
         Schema::create('stats', function (Blueprint $table) {
             $table->id();
-            $table->string('hash_request');
+            $table->string('request');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ class StatsFactory extends Factory
     public function definition(): array
     {
         return [
-            'hash_request' => $this->faker->unique()->userName()
+            'request' => $this->faker->unique()->userName()
         ];
     }
 }

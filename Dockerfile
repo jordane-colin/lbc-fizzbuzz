@@ -1,6 +1,8 @@
 FROM php:7.4-fpm
 
-WORKDIR /var/www
+# Arguments defined in docker-compose.yml
+ARG user
+ARG uid
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,16 +18,16 @@ RUN apt-get update && apt-get install -y \
     libssl-dev
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install mbstring exif pcntl bcmath gd
 
 RUN pecl install mongodb-1.8.0 && docker-php-ext-enable mongodb
 
-RUN usermod -a -G sudo www-data && \
-    echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -33,11 +35,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 ADD . /var/www
 RUN chown -R www-data:www-data /var/www
+COPY --chown=www-data:www-data  . /var/www
+USER $user
+
+# copy all of the file in folder to /src
+COPY . /var/www
+WORKDIR /var/www
+
+
+RUN composer update
+RUN composer dump-autoload
 
 ADD .env.example /var/www/.env
-
-USER www-data
-
-RUN composer install
+RUN chmod -R 777 storage
 
 EXPOSE 9000

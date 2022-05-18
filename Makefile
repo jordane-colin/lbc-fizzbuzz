@@ -27,3 +27,6 @@ logs: ## Show live logs
 ## Tests
 launch-tests: ## Launch tests
 	$(APP_CONT) php vendor/phpunit/phpunit/phpunit
+
+create-db: ## Launch tests
+	$(APP_CONT) php artisan migrate

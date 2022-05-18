@@ -67,6 +67,10 @@ class FizzBuzzController extends Controller
      *             @OA\Property(type="string")
      *         ),
      *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
      * )
      * @throws JsonException
      */
@@ -75,7 +79,7 @@ class FizzBuzzController extends Controller
         $validator = \Validator::make($request->all(), FizzBuzzValidator::$rules);
 
         if ($validator->fails()) {
-            return $validator->errors();
+            abort(400, $validator->errors());
         }
 
         try {
@@ -85,7 +89,7 @@ class FizzBuzzController extends Controller
             $item2->setMultiplier((int) $request->input('int2'))->setWord($request->input('str2', 'Buzz'));
             $limit = $request->input('limit');
             Stats::create([
-                'hash_request' => json_encode($request->all(), JSON_THROW_ON_ERROR),
+                'request' => json_encode($request->all(), JSON_THROW_ON_ERROR),
             ]);
 
             return $this->fizzBuzzAction->play($item1, $item2, $limit);
@@ -115,7 +119,7 @@ class FizzBuzzController extends Controller
         try {
             $result = $this->statsRepository->getMostCalledRequest();
             if ($result === null) {
-                return 'No result found yet';
+                return json_encode([], JSON_THROW_ON_ERROR);
             }
 
             $data = [
