@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  app:
+    container_name: fizzbuzz-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+      - /var/www/vendor
+    networks:
+      - lbc-fizzbuzz
+
+  nginx:
+    image: nginx:alpine
+    container_name: fizzbuzz-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - lbc-fizzbuzz
+
+  mongodb:
+    container_name: fizzbuzz-mongodb
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/docker-compose/mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DB_DATABASE}
+    networks:
+      - lbc-fizzbuzz
+
+networks:
+  lbc-fizzbuzz:
+    driver: bridge

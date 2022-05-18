@@ -1,0 +1,103 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LBC-FizzBuzz",
+        "description": "",
+        "version": "1.0"
+    },
+    "paths": {
+        "/generate_fizzbuzz": {
+            "get": {
+                "operationId": "/generate_fizzbuzz",
+                "parameters": [
+                    {
+                        "name": "int1",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "int2",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "str1",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "fizz"
+                        }
+                    },
+                    {
+                        "name": "str2",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "buzz"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns generated fizzbuzz",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get_most_called_request": {
+            "get": {
+                "operationId": "/get_most_called_request",
+                "responses": {
+                    "200": {
+                        "description": "Returns the most called request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
